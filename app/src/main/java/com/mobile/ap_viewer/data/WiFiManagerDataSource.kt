@@ -18,6 +18,7 @@ class WiFiManagerDataSource @Inject constructor(@ApplicationContext val context:
     private val wifiScanReceiver: BroadcastReceiver
     private val intentFilter = IntentFilter()
     private var latestResults: MutableList<ScanResult> = mutableListOf()
+    var scanState = 0
 
     init {
         wifiScanReceiver = object : BroadcastReceiver() {
@@ -36,11 +37,13 @@ class WiFiManagerDataSource @Inject constructor(@ApplicationContext val context:
     }
 
     fun scanSuccess() {
-        println("Scan Success")
+        scanState = 0
+        println("Scan successful!")
     }
 
     fun scanFailure() {
-        println("Scan Failure")
+        scanState = 1
+        println("Scan failed...")
     }
 
     fun getScanResults(): List<ScanResult> {
