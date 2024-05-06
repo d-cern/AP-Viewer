@@ -14,10 +14,10 @@ class ScanRecordRepository @Inject constructor(
     private lateinit var scanRecord: ScanRecord
 
     init {
-        refreshScanRecords()
+        updateAccessPoints()
     }
 
-    fun refreshScanRecords() {
+    private fun updateAccessPoints() {
         val results = wifi.getScanResults()
         accessPointList.clear()
         results.forEach {
@@ -38,6 +38,11 @@ class ScanRecordRepository @Inject constructor(
     }
 
     fun getScanRecord(): ScanRecord {
+        updateAccessPoints()
         return scanRecord
+    }
+
+    fun getAccessPoints(): List<AccessPoint> {
+        return getScanRecord().accessPointList
     }
 }
